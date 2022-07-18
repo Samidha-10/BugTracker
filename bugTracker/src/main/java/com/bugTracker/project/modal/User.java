@@ -1,4 +1,4 @@
-package com.bug.tracking.model;
+package com.bugTracker.project.modal;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
