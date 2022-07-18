@@ -1,4 +1,5 @@
-package com.bug.tracking.controller;
+package com.bugTracker.project.controller;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,16 +17,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bug.tracking.execption.ResourceNotFoundException;
-import com.bug.tracking.model.User;
-import com.bug.tracking.repository.UserRepo;
+import com.bugTracker.project.exception.ResourceNotFoundException;
+import com.bugTracker.project.modal.User;
+import com.bugTracker.project.repository.UserRepository;
+
+
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
 	@Autowired
-	private UserRepo userRepo;
+	private UserRepository userRepo;
 	
 	@GetMapping("view")
 	public List<User> getAllUser(){
