@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -41,12 +43,12 @@ public class UserController {
 	}
 	
 	@PostMapping("add")
-	public User createUser(@Validated @RequestBody User user) {
+	public User createUser(@Valid@RequestBody User user) {
 		return userRepo.save(user);
 	}
 	
 	@PutMapping("update/{id}")
-	public ResponseEntity<User> getUserById(@PathVariable(value="userId") Long userId,
+	public ResponseEntity<User> getUserById(@PathVariable(value="id") Long userId,
 			@Validated @RequestBody User userDetail)throws ResourceNotFoundException{
 		User user = userRepo.findById(userId)
 				.orElseThrow(()->new ResourceNotFoundException("User not found for this id :: " + userId));
@@ -58,7 +60,7 @@ public class UserController {
 	}
 	
 	@DeleteMapping("delete/{id}")
-	public Map<String, Boolean> deleteUser(@PathVariable(value ="userId")Long userId)
+	public Map<String, Boolean> deleteUser(@PathVariable(value ="id")Long userId)
 	throws ResourceNotFoundException{
 		User user=userRepo.findById(userId)
 		.orElseThrow(()->new ResourceNotFoundException("User not found for this id :: " + userId));

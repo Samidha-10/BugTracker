@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -41,7 +43,7 @@ public class EmployeeController {
 	}
 
 	@PostMapping("add")
-	public Employee createEmployee(@Validated @RequestBody Employee employee) {
+	public Employee createEmployee(@Valid @RequestBody Employee employee) {
 		return employeeRepo.save(employee);
 	}
 	
