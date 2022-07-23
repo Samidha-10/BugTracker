@@ -1,6 +1,9 @@
 package com.bug.tracking.serviceImpl;
 
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,31 +17,32 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired
 	private ProjectRepository projectRepository;
 	@Override
-	public Project saveOrUpdate(Project project) {
+	public Project addProject(Project project) {
 		try{
-			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+			project.setId(project.getId());
 			return projectRepository.save(project);
 		}catch(Exception ex) {
-			throw new ProjectIdException("Project Id : "+project.getProjectIdentifier().toUpperCase()+"already exists");
+			throw new ProjectIdException("Project Id : "+project.getId()+"already exists");
 		}
 		
 	}
 	@Override
-	public Project findProjectByIdentifier(String projectId) {
-		Project project=projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+	public Project findById(Long id) {
+		Project project=projectRepository.findByProjectId(id);
 		if(project == null)
-			throw new ProjectIdException("Project Id " + projectId.toUpperCase()+" does not exist");
+			throw new ProjectIdException("Project Id " + id+" does not exist");
 		return project;
 	}
+	
 	@Override
-	public Iterable<Project> findAllProject() {
+	public List<Project> findAllProject() {
 		return projectRepository.findAll();
 	}
 	@Override
-	public void deleteProjectByProjectIdentifier(String projectId) {
-		Project project=projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+	public void deleteProject(Long projectId) {
+		Project project=projectRepository.findByProjectId(projectId);
 		if(project == null)
-			throw new ProjectIdException("Project Id " + projectId.toUpperCase()+" does not exist");
+			throw new ProjectIdException("Project Id " + projectId+" does not exist");
 		projectRepository.delete(project);
 		
 	}
