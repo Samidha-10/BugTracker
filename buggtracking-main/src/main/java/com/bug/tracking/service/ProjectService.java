@@ -1,10 +1,14 @@
 package com.bug.tracking.service;
 
+import java.util.List;
+
+
 import com.bug.tracking.modal.Project;
 
 public interface ProjectService {
-public Project saveOrUpdate(Project project);
-public Project findProjectByIdentifier(String projectId);
-public Iterable<Project> findAllProject();
-public void deleteProjectByProjectIdentifier(String projectId);
+public Project addProject(Project project);
+public Project findById(Long projectId);
+
+public List<Project> findAllProject();
+public void deleteProject(Long projectId);
 }
