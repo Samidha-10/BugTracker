@@ -9,6 +9,6 @@ import com.bug.tracking.modal.Project;
 
 @Repository
 public interface ProjectRepository extends CrudRepository<Project, Long>{
-	Project findByProjectIdentifier(String projectIdentifier);
+	Project findByProjectId(Long projectId);
 	List<Project> findAll();
 }
