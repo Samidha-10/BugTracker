@@ -1,5 +1,7 @@
 package com.bug.tracking.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,7 @@ public class BugServiceImpl implements BugService {
 	@Autowired
 	private BugRepository bugRepository;
 	@Override
-	public Bug saveOrUpdate(Bug bug) {
+	public Bug createBug(Bug bug) {
 		try{
 			bug.setId(bug.getId());
 			return bugRepository.save(bug);
@@ -24,23 +26,38 @@ public class BugServiceImpl implements BugService {
 		
 	}
 	@Override
-	public Bug findBugById(Long id) {
-		Bug bug=bugRepository.findBugById(id);
+	public Bug findBugById(Long bugId) throws BugIdException{
+		Bug bug=bugRepository.findBugById(bugId);
 		if(bug == null)
-			throw new BugIdException("Bug Id " + id +" does not exist");
+			throw new BugIdException("Bug Id " + bugId +" does not exist");
 		return bug;
 	}
 	@Override
-	public Iterable<Bug> findAllBug() {
+	public List<Bug> findAllBug() {
 		return bugRepository.findAll();
 	}
 	@Override
-	public void deleteBugById(Long id) {
-		Bug bug = bugRepository.findBugById(id);
+	public void deleteBugById(Long bugId) throws BugIdException{
+		Bug bug = bugRepository.findBugById(bugId);
 		if(bug == null)
-			throw new BugIdException("Bug Id " + id +" does not exist");
+			throw new BugIdException("Bug Id " + bugId +" does not exist");
 		bugRepository.delete(bug);
 		
+	}
+	@Override
+	public Bug updateBug(Bug bug) throws BugIdException {
+			Bug bugOptional = bugRepository.findBugById(bug.getId());
+			if(bugOptional==null) {
+				throw new BugIdException("Invalid Bug Id.....Cannot Update");
+				
+			}
+			bugOptional.setBugName(bugOptional.getBugName());
+		return bugRepository.save(bugOptional);
+	}
+	@Override
+	public List<Bug> getAllBugsByStatus(String Status) {
+		
+		return bugRepository.findByStatus(Status);
 	}
 	
 }
